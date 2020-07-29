@@ -55,7 +55,7 @@ public class CharactersInPlay {
          //   }
         //}
         int index=findIndexOfMax();
-        System.out.println("most speaking parts"+myWords.get(index)+"\t"+
+        System.out.println("most speaking parts "+myWords.get(index)+"\t"+
         myFreqs.get(index));
         int num1=10;
         int num2=15;
