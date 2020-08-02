@@ -23,4 +23,32 @@ public class Tester
         le.readFile("short-test_log");
         le.printAll();
     }
+    public void uniqueIP(){
+        LogAnalyzer le=new LogAnalyzer();
+        le.readFile("short-test_log");
+        System.out.println("No of unique IPs: "+le.countUniqueIPs());
+    }
+    
+    public void testprintAllHigherThanNum(){
+    int number=400;
+    System.out.println("LogEntries with status code greater than "+number);
+    LogAnalyzer le=new LogAnalyzer();
+    le.readFile("weblog1_log");
+    le.printAllHigherThanNum(number);
+    }
+    
+    public void testUniqueIPVisitsOnDay(){
+    LogAnalyzer le=new LogAnalyzer();
+    le.readFile("weblog1_log");
+    //System.out.println(le.uniqueIPVisitsOnDay("Sep 14"));
+    //System.out.println(le.uniqueIPVisitsOnDay("Sep 30"));
+    System.out.println(le.uniqueIPVisitsOnDay("Mar 24").size());
+    }
+    
+    public void testCountUniqueIPsInRange(){
+        LogAnalyzer le=new LogAnalyzer();
+        le.readFile("weblog1_log");
+        //System.out.println(le.countUniqueIPsInRange(200,299));
+        System.out.println(le.countUniqueIPsInRange(300,399));
+    }
 }
