@@ -47,13 +47,13 @@ public class CharactersInPlay {
         return index;
     }
     public void tester(){
-        int threshold=10;
+        int threshold=50;
         findAllCharacters();
-        //for(int i=0;i<myWords.size();i++){
-        //    if(myFreqs.get(i)>threshold){
-         //       System.out.println(myWords.get(i)+"\t"+myFreqs.get(i));
-         //   }
-        //}
+        for(int i=0;i<myWords.size();i++){
+            if(myFreqs.get(i)>threshold){
+               System.out.println(myWords.get(i)+"\t"+myFreqs.get(i));
+            }
+        }
         int index=findIndexOfMax();
         System.out.println("most speaking parts "+myWords.get(index)+"\t"+
         myFreqs.get(index));
