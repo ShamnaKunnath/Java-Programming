@@ -15,16 +15,24 @@ public class VigenereBreaker {
     public int[] tryKeyLength(String encrypted, int klength, char mostCommon) {
         int[] key = new int[klength];
         CaesarCracker cc=new CaesarCracker();
-        int k=0;
         //WRITE YOUR CODE HERE
         for(int i=0;i<klength;i++){
-            key[k++]=cc.getKey(sliceString(encrypted,i,klength));
+            key[i]=cc.getKey(sliceString(encrypted,i,klength));
         }
         return key;
     }
 
     public void breakVigenere () {
         //WRITE YOUR CODE HERE
+    }
+    public void tester(){
+        FileResource fr=new FileResource("Data/athens_keyflute.txt");
+        int[] key =tryKeyLength(fr.asString(),5,'e');
+        System.out.print("[");
+        for(int i=0;i<key.length;i++){
+           System.out.print(key[i]+", "); 
+        }
+        System.out.println("]");
     }
     
 }
