@@ -24,6 +24,12 @@ public class VigenereBreaker {
 
     public void breakVigenere () {
         //WRITE YOUR CODE HERE
+        FileResource fr=new FileResource("Data/athens_keyflute.txt");
+        String str=fr.asString();
+        int keylength=5;
+        int[] key=tryKeyLength(str, 5,'e');
+        VigenereCipher vc=new VigenereCipher(key);
+        System.out.println(vc.decrypt(str));
     }
     public void tester(){
         FileResource fr=new FileResource("Data/athens_keyflute.txt");
