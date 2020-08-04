@@ -1,6 +1,6 @@
 import java.util.*;
 import edu.duke.*;
-
+import java.io.*;
 public class VigenereBreaker {
     public String sliceString(String message, int whichSlice, int totalSlices) {
         //REPLACE WITH YOUR CODE
@@ -44,8 +44,9 @@ public class VigenereBreaker {
         int max=0;
         int res=0;
         String ans="";
+        char common=mostCommonCharIn(dictionary);
         for(int i=1;i<101;i++){
-            int[] key=tryKeyLength(encrypted,i,'e');
+            int[] key=tryKeyLength(encrypted,i,common);
             VigenereCipher vc=new VigenereCipher(key);
             String dmsg=vc.decrypt(encrypted);
             int count=countWords(dmsg,dictionary);
@@ -59,21 +60,70 @@ public class VigenereBreaker {
         
         return ans;
     }
+
+    public char mostCommonCharIn(HashSet<String> dictionary){
+        int[] arr=new int[26];
+        for(String s: dictionary){
+            s=s.toLowerCase();
+            for(int i=0;i<s.length();i++){
+                char c=s.charAt(i);
+                if(c<='z' && c>='a')
+                    arr[c-'a']++;
+            }
+        }
+        int max=0,ans=0;
+        for(int i=0;i<26;i++){
+            if(arr[i]>max){
+                max=arr[i];
+                ans=i;
+            }
+        }
+        char ch=(char)('a'+ans);
+        return ch;
+    }
+    public String breakForAllLangs(String encrypted,HashMap<String,HashSet<String>> languages){
+        int max=0;
+        String res="";
+        String lang="";
+        for(String s: languages.keySet()){
+            HashSet h=languages.get(s);
+            String dec=breakForLanguage(encrypted,h);
+            int c=countWords(dec,h);
+            if(c>max){
+                max=c;
+                res=dec;
+                lang=s;
+            }
+        }
+        System.out.println("Decrypted message: "+res.substring(0,100)+"\n"+
+        "Languages: "+lang);
+        return res;
+    }
     public void breakVigenere () {
         //WRITE YOUR CODE HERE
-        FileResource fr=new FileResource("messages/secretmessage2.txt");
-        String str=fr.asString();
-        FileResource english=new FileResource("dictionaries/English");
-        HashSet h=readDictionary(english);
+        DirectoryResource dr=new DirectoryResource();
+        HashMap<String, HashSet<String>> map=new HashMap<String, HashSet<String>>();
+        for(File f: dr.selectedFiles()){
+            String lang=f.getName();
+            FileResource fr=new FileResource(f);
+            HashSet h=readDictionary(fr);
+            map.put(lang,h);
+            System.out.println(lang+" addded to dictionaries");
+        }
+        //String str=fr.asString();
+        //FileResource english=new FileResource("dictionaries/English");
+        //HashSet h=readDictionary(english);
         //int keylength=4;
         //int[] key=tryKeyLength(str, 4,'e');
         //VigenereCipher vc=new VigenereCipher(key);
-        System.out.println(breakForLanguage(str,h).substring(0,100));
-        int[] key=tryKeyLength(str,38,'e');
-        VigenereCipher vc=new VigenereCipher(key);
-        String dmsg=vc.decrypt(str);
-        int count=countWords(dmsg,h);
-        System.out.println("no of valid words: "+count); 
+        FileResource message=new FileResource("messages/secretmessage4.txt");
+        String str=message.asString();
+        String dec=breakForAllLangs(str,map);
+        //int[] key=tryKeyLength(str,38,'e');
+        //VigenereCipher vc=new VigenereCipher(key);
+        //String dmsg=vc.decrypt(str);
+        //int count=countWords(dmsg,h);
+        //System.out.println("no of valid words: "+count); 
     }
     public void tester(){
         FileResource fr=new FileResource("messages/secretmessage1.txt");
