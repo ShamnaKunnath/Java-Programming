@@ -65,13 +65,13 @@ public class CaesarCipher {
         int key = 15;
         //FileResource fr = new FileResource();
         //String message = fr.asString();
-        String message="At noon be in the conference room with your hat on for a surprise party. YELL LOUD!";
+        String message="Can you imagine life WITHOUT the internet AND computers in your pocket?";
         String encrypted = encrypt(message, key);
         System.out.println(encrypted);
         
     }
     public void testencryptTwoKeys(){
-        System.out.println(encryptTwoKeys("At noon be in the conference room with your hat on for a surprise party. YELL LOUD!",8,21));
+        System.out.println(encryptTwoKeys("Can you imagine life WITHOUT the internet AND computers in your pocket?",21,8));
     }
 }
 
